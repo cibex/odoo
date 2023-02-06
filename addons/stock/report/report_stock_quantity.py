@@ -44,8 +44,8 @@ WITH
         FROM stock_move m
         LEFT JOIN stock_location ls on (ls.id=m.location_id)
         LEFT JOIN stock_location ld on (ld.id=m.location_dest_id)
-        LEFT JOIN stock_warehouse whs ON ls.parent_path like concat('%/', whs.view_location_id, '/%')
-        LEFT JOIN stock_warehouse whd ON ld.parent_path like concat('%/', whd.view_location_id, '/%')
+        LEFT JOIN stock_warehouse whs ON ls.parent_path like concat('%/', whs.view_location_id, '/%') OR ls.parent_path like concat(whs.view_location_id, '/%')
+        LEFT JOIN stock_warehouse whd ON ld.parent_path like concat('%/', whd.view_location_id, '/%') OR ld.parent_path like concat(whd.view_location_id, '/%')
         LEFT JOIN product_product pp on pp.id=m.product_id
         LEFT JOIN product_template pt on pt.id=pp.product_tmpl_id
         WHERE pt.type = 'product' AND
